@@ -11,26 +11,28 @@ public:
     bool inStock;
 };
 
+void swapItems(Item &a, Item &b)
+{
+    Item temp = a;
+    a = b;
+    b = temp;
+}
+
 int divide(Item data[], int low, int high)
 {
-    float pivotValue = data[high].itemCost;
+    float pivot = data[high].itemCost;
     int i = low - 1;
 
     for (int j = low; j < high; j++)
     {
-        if (data[j].itemCost <= pivotValue)
+        if (data[j].itemCost <= pivot)
         {
             i++;
-            Item temp = data[i];
-            data[i] = data[j];
-            data[j] = temp;
+            swapItems(data[i], data[j]);
         }
     }
 
-    Item temp = data[i + 1];
-    data[i + 1] = data[high];
-    data[high] = temp;
-
+    swapItems(data[i + 1], data[high]);
     return i + 1;
 }
 
@@ -43,3 +45,33 @@ void quickSort(Item data[], int low, int high)
         quickSort(data, pivotIndex + 1, high);
     }
 }
+
+int main()
+{
+    Item data[5] = {
+        {"Laptop", 85000, "Gaming laptop", true},
+        {"Mouse", 1200, "Wireless mouse", true},
+        {"Keyboard", 3500, "Mechanical keyboard", false},
+        {"Monitor", 25000, "24 inch LED", true},
+        {"USB", 800, "32GB USB drive", true}
+    };
+
+    int n = 5;
+
+    cout << "\n--- Before Sorting ---\n";
+    for (int i = 0; i < n; i++)
+    {
+        cout << data[i].itemName << " - " << data[i].itemCost << endl;
+    }
+
+    quickSort(data, 0, n - 1);
+
+    cout << "\n--- After Sorting (Ascending by Cost) ---\n";
+    for (int i = 0; i < n; i++)
+    {
+        cout << data[i].itemName << " - " << data[i].itemCost << endl;
+    }
+
+    return 0;
+}
+
