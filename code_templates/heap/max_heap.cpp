@@ -64,6 +64,8 @@
             }
         }
 
+        
+
         void insert(int val)
         {
             if (currentSize >= 10)
@@ -75,6 +77,43 @@
             heapify_up(currentSize);
             currentSize++;
         }
+
+    void heapSort()
+    {
+    if (currentSize == 0)
+    {
+        cout << "Heap is empty!" << endl;
+        return;
+    }
+
+    // Temporary copy (so original heap stays unchanged)
+    int tempHeap[10];
+    for (int i = 0; i < currentSize; i++)
+        tempHeap[i] = heap[i];
+
+    int tempSize = currentSize;
+
+    cout << "Heapsort result: ";
+
+    // Perform heap sort
+    while (tempSize > 0)
+    {
+        // Maximum element at root
+        cout << tempHeap[0] << " ";
+
+        // Move last element to root
+        tempHeap[0] = tempHeap[tempSize - 1];
+        tempSize--;
+
+        // Call heapify_down on temp array
+        heapify_down_temp(tempHeap, tempSize, 0);
+    }
+
+    cout << endl;
+}
+
+
+        
 
         void deleteFromMaxHeap()
         {
@@ -140,3 +179,4 @@
 
         return 0;
     }
+
